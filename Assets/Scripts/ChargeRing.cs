@@ -5,17 +5,17 @@ using VRC.SDKBase;
 using VRC.Udon;
 
 /// <summary>
-/// JetController‚ÉƒGƒlƒ‹ƒM[‚ğƒ`ƒƒ[ƒW‚·‚éƒŠƒ“ƒO‚ğì¬‚·‚é
+/// JetControllerã«ã‚¨ãƒãƒ«ã‚®ãƒ¼ã‚’ãƒãƒ£ãƒ¼ã‚¸ã™ã‚‹ãƒªãƒ³ã‚°ã‚’ä½œæˆã™ã‚‹ 
 /// 
-/// Scene‚É•K—v‚È‚à‚Ì
-/// * JetController.cs‚ªƒAƒ^ƒbƒ`‚³‚ê‚½ƒRƒ“ƒgƒ[ƒ‰ƒIƒuƒWƒFƒNƒg4‚Â
-/// * ƒŠƒ“ƒO‚É“–‚½‚Á‚½‚Æ‚«‚É”­¶‚·‚éƒGƒtƒFƒNƒg—pParticleSystem
-/// * ƒŠƒ“ƒO‚ªg—p‰Â”\‚Å‚ ‚é‚±‚Æ‚ğ¦‚·ƒGƒtƒFƒNƒg—pParticleSystem
+/// Sceneã«å¿…è¦ãªã‚‚ã®
+/// * JetController.csãŒã‚¢ã‚¿ãƒƒãƒã•ã‚ŒãŸã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ4ã¤
+/// * ãƒªãƒ³ã‚°ã«å½“ãŸã£ãŸã¨ãã«ç™ºç”Ÿã™ã‚‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆç”¨ParticleSystem
+/// * ãƒªãƒ³ã‚°ãŒä½¿ç”¨å¯èƒ½ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ã‚¨ãƒ•ã‚§ã‚¯ãƒˆç”¨ParticleSystem
 /// </summary>
 public class ChargeRing1 : UdonSharpBehaviour
 {
     /// <summary>
-    /// ƒRƒ“ƒgƒ[ƒ‰ƒIƒuƒWƒFƒNƒg4‚Â
+    /// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ4ã¤
     /// </summary>
     public UdonBehaviour controller1;
     public UdonBehaviour controller2;
@@ -23,42 +23,42 @@ public class ChargeRing1 : UdonSharpBehaviour
     public UdonBehaviour controller4;
 
     /// <summary>
-    /// ƒŠƒ“ƒO‚ÉG‚ê‚½‚Æ‚«‚É”­¶‚·‚éƒGƒtƒFƒNƒg
+    /// ãƒªãƒ³ã‚°ã«è§¦ã‚ŒãŸã¨ãã«ç™ºç”Ÿã™ã‚‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     public ParticleSystem particle;
 
     /// <summary>
-    /// Äƒ`ƒƒ[ƒW‰Â”\‚É‚È‚é‚Ü‚Å‚ÌŠÔi•bj
+    /// å†ãƒãƒ£ãƒ¼ã‚¸å¯èƒ½ã«ãªã‚‹ã¾ã§ã®æ™‚é–“ï¼ˆç§’ï¼‰
     /// </summary>
     [SerializeField]
     private float recastSecond = 5f;
 
     /// <summary>
-    /// Äƒ`ƒƒ[ƒW‰Â”\‚É‚È‚é‚Ü‚Å‚Ìc‚èŠÔ
+    /// å†ãƒãƒ£ãƒ¼ã‚¸å¯èƒ½ã«ãªã‚‹ã¾ã§ã®æ®‹ã‚Šæ™‚é–“
     /// </summary>
     private float recastTime = 0;
 
     /// <summary>
-    /// ƒŠƒ“ƒO‚ªg—p‰Â”\‚Å‚ ‚é‚©
+    /// ãƒªãƒ³ã‚°ãŒä½¿ç”¨å¯èƒ½ã§ã‚ã‚‹ã‹
     /// </summary>
     [UdonSynced]
     public bool isActive = true;
 
     /// <summary>
-    /// ƒŠƒ“ƒO‚ªƒ`ƒƒ[ƒW‰Â”\‚È‚±‚Æ‚ğ¦‚·ƒGƒtƒFƒNƒg
+    /// ãƒªãƒ³ã‚°ãŒãƒãƒ£ãƒ¼ã‚¸å¯èƒ½ãªã“ã¨ã‚’ç¤ºã™ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     private ParticleSystem chargeParticle;
 
     private void OnTriggerEnter(Collider other)
     {
-        // ƒvƒŒƒCƒ„[‚ÉG‚ê‚ÄƒŠƒ“ƒO‚ª—LŒø‚Å‚ ‚ê‚Î
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è§¦ã‚Œã¦ãƒªãƒ³ã‚°ãŒæœ‰åŠ¹ã§ã‚ã‚Œã°
         if (other.GetType() == typeof(CharacterController) && isActive)
         {
-            // “–‚½‚Á‚½ƒvƒŒƒCƒ„[‚Ìƒ[ƒJƒ‹‚Åˆ—‚ğ‚¨‚±‚È‚¤
-            // “–‚½‚Á‚½ƒvƒŒƒCƒ„[‚ª‚Ç‚ÌƒRƒ“ƒgƒ[ƒ‰‚ğ‚Á‚Ä‚¢‚é‚©
-            // “–‚½‚Á‚½ƒvƒŒƒCƒ„[‚ª‚ÂƒRƒ“ƒgƒ[ƒ‰‚ÌƒGƒlƒ‹ƒM[‚ğ–ƒ^ƒ“‚É‚·‚é
+            // å½“ãŸã£ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ­ãƒ¼ã‚«ãƒ«ã§å‡¦ç†ã‚’ãŠã“ãªã†
+            // å½“ãŸã£ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã©ã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã‚’æŒã£ã¦ã„ã‚‹ã‹
+            // å½“ãŸã£ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæŒã¤ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®ã‚¨ãƒãƒ«ã‚®ãƒ¼ã‚’æº€ã‚¿ãƒ³ã«ã™ã‚‹
             if (Networking.IsOwner(controller1.gameObject))
             {
                 controller1.SendCustomEvent("ChargeEnergyToFull");
@@ -76,28 +76,28 @@ public class ChargeRing1 : UdonSharpBehaviour
                 controller4.SendCustomEvent("ChargeEnergyToFull");
             }
 
-            // ƒŠƒ“ƒO‚É‚ ‚½‚Á‚½ƒGƒtƒFƒNƒg‚ğ‘Sˆõ‚É“¯Šú‚³‚¹‚é‚æ‚¤‚É”­¶‚³‚¹‚é
+            // ãƒªãƒ³ã‚°ã«ã‚ãŸã£ãŸã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å…¨å“¡ã«åŒæœŸã•ã›ã‚‹ã‚ˆã†ã«ç™ºç”Ÿã•ã›ã‚‹
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayParticle");
 
-            // ƒCƒ“ƒXƒ^ƒ“ƒX‚ÌMaster“à‚¾‚¯‚ÅÄƒ`ƒƒ[ƒWˆ—‚ğ‚¨‚±‚È‚¤
+            // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®Masterå†…ã ã‘ã§å†ãƒãƒ£ãƒ¼ã‚¸å‡¦ç†ã‚’ãŠã“ãªã†
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, "SetRecast");
 
-            // ‘Sˆõ‚É“¯Šú‚³‚¹‚é‚æ‚¤‚Éƒ`ƒƒ[ƒW‰Â”\‚Å‚ ‚é‚±‚Æ‚ğ¦‚·ƒGƒtƒFƒNƒg‚ğÁ‚·
+            // å…¨å“¡ã«åŒæœŸã•ã›ã‚‹ã‚ˆã†ã«ãƒãƒ£ãƒ¼ã‚¸å¯èƒ½ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æ¶ˆã™
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "InactiveChargeRing");
         }
     }
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
-        // TODO: Joiner‚Ìƒ[ƒJƒ‹‚Å‚±‚ê‚ª“®‚¢‚Ä‚¢‚é‚©‰ö‚µ‚¢
+        // TODO: Joinerã®ãƒ­ãƒ¼ã‚«ãƒ«ã§ã“ã‚ŒãŒå‹•ã„ã¦ã„ã‚‹ã‹æ€ªã—ã„
 
-        // “ü‚Á‚½lˆÈŠO‚Íˆ—‚ğ‚¨‚±‚È‚í‚È‚¢
+        // å…¥ã£ãŸäººä»¥å¤–ã¯å‡¦ç†ã‚’ãŠã“ãªã‚ãªã„
         if (!player.isLocal)
         {
             return;
         }
 
-        // –³Œø‚Å‚ ‚ê‚ÎƒŠƒ“ƒOƒGƒtƒFƒNƒg‚ğÁ‚·
+        // ç„¡åŠ¹ã§ã‚ã‚Œã°ãƒªãƒ³ã‚°ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æ¶ˆã™
         if (!isActive)
         {
             InactiveChargeRing();
@@ -106,20 +106,20 @@ public class ChargeRing1 : UdonSharpBehaviour
 
     private void Update()
     {
-        // ƒCƒ“ƒXƒ^ƒ“ƒX‚ÌMaster“à‚Ì‚İ‚Åˆ—‚ğÀs‚·‚é
+        // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®Masterå†…ã®ã¿ã§å‡¦ç†ã‚’å®Ÿè¡Œã™ã‚‹
         if (Networking.LocalPlayer.IsOwner(this.gameObject))
         {
-            // ƒŠƒ“ƒO‚ª–³Œøó‘Ô‚È‚çƒŠƒLƒƒƒXƒgŠÔ‚ğŒvZ‚·‚é
+            // ãƒªãƒ³ã‚°ãŒç„¡åŠ¹çŠ¶æ…‹ãªã‚‰ãƒªã‚­ãƒ£ã‚¹ãƒˆæ™‚é–“ã‚’è¨ˆç®—ã™ã‚‹
             if (!isActive)
             {
                 recastTime -= Time.deltaTime;
 
-                // c‚èŠÔ‚ª‚È‚¢‚È‚çƒŠƒ“ƒO‚ğ—LŒø‚É‚·‚é
+                // æ®‹ã‚Šæ™‚é–“ãŒãªã„ãªã‚‰ãƒªãƒ³ã‚°ã‚’æœ‰åŠ¹ã«ã™ã‚‹
                 if (recastTime <= 0)
                 {
                     isActive = true;
 
-                    // ‘Sˆõ‚É“¯Šú‚·‚é‚æ‚¤‚ÉƒŠƒ“ƒOƒGƒtƒFƒNƒg‚ğ•œŠˆ‚³‚¹‚é
+                    // å…¨å“¡ã«åŒæœŸã™ã‚‹ã‚ˆã†ã«ãƒªãƒ³ã‚°ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å¾©æ´»ã•ã›ã‚‹
                     SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ActiveChargeRing");
                 }
             }
@@ -127,7 +127,7 @@ public class ChargeRing1 : UdonSharpBehaviour
     }
 
     /// <summary>
-    /// ƒŠƒ“ƒO‚É‚ ‚½‚Á‚½ƒGƒtƒFƒNƒg‚ğ”­¶‚³‚¹‚é
+    /// ãƒªãƒ³ã‚°ã«ã‚ãŸã£ãŸã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç™ºç”Ÿã•ã›ã‚‹
     /// </summary>
     public void PlayParticle()
     {
@@ -135,7 +135,7 @@ public class ChargeRing1 : UdonSharpBehaviour
     }
 
     /// <summary>
-    /// ƒ`ƒƒ[ƒW‰Â”\‚Å‚ ‚é‚±‚Æ‚ğ¦‚·ƒGƒtƒFƒNƒg‚ğ—LŒø‚É‚·‚é
+    /// ãƒãƒ£ãƒ¼ã‚¸å¯èƒ½ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æœ‰åŠ¹ã«ã™ã‚‹
     /// </summary>
     public void ActiveChargeRing()
     {
@@ -143,7 +143,7 @@ public class ChargeRing1 : UdonSharpBehaviour
     }
 
     /// <summary>
-    /// ƒ`ƒƒ[ƒW‰Â”\‚Å‚ ‚é‚±‚Æ‚ğ¦‚·ƒGƒtƒFƒNƒg‚ğ–³Œø‚É‚·‚é
+    /// ãƒãƒ£ãƒ¼ã‚¸å¯èƒ½ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç„¡åŠ¹ã«ã™ã‚‹
     /// </summary>
     public void InactiveChargeRing()
     {
@@ -151,7 +151,7 @@ public class ChargeRing1 : UdonSharpBehaviour
     }
 
     /// <summary>
-    /// Äƒ`ƒƒ[ƒW‰Â”\‚É‚È‚é‚Ü‚Å‚ÌŠÔŒv‘ª‚ğŠJn‚·‚é
+    /// å†ãƒãƒ£ãƒ¼ã‚¸å¯èƒ½ã«ãªã‚‹ã¾ã§ã®æ™‚é–“è¨ˆæ¸¬ã‚’é–‹å§‹ã™ã‚‹
     /// </summary>
     public void SetRecast()
     {

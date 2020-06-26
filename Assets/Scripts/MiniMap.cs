@@ -5,58 +5,58 @@ using VRC.SDKBase;
 using VRC.Udon;
 
 /// <summary>
-/// Canvas‚ÉMiniMap‚ğì¬‚·‚é
+/// Canvasã«MiniMapã‚’ä½œæˆã™ã‚‹ 
 /// 
-/// Scene‚É•K—v‚È‚à‚Ì
-/// * Player‚ª‚Â‚Ü‚½‚Í’Ç]‚·‚éGameObject4‚Â
-/// * Player‚ÌˆÊ’u‚ğ¦‚·CanvasƒAƒCƒeƒ€‚ğ4‚Â‚ÂCanvas
+/// Sceneã«å¿…è¦ãªã‚‚ã®
+/// * PlayerãŒæŒã¤ã¾ãŸã¯è¿½å¾“ã™ã‚‹GameObject4ã¤
+/// * Playerã®ä½ç½®ã‚’ç¤ºã™Canvasã‚¢ã‚¤ãƒ†ãƒ ã‚’4ã¤æŒã¤Canvas
 /// </summary>
 public class MiniMap : UdonSharpBehaviour
 {
     /// <summary>
-    /// Player1‚ª‚Â‚Ü‚½‚Í’Ç]‚·‚éƒIƒuƒWƒFƒNƒg
+    /// Player1ãŒæŒã¤ã¾ãŸã¯è¿½å¾“ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     private Transform player1Controller;
 
     /// <summary>
-    /// Player2‚ª‚Â‚Ü‚½‚Í’Ç]‚·‚éƒIƒuƒWƒFƒNƒg
+    /// Player2ãŒæŒã¤ã¾ãŸã¯è¿½å¾“ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     private Transform player2Controller;
 
     /// <summary>
-    /// Player3‚ª‚Â‚Ü‚½‚Í’Ç]‚·‚éƒIƒuƒWƒFƒNƒg
+    /// Player3ãŒæŒã¤ã¾ãŸã¯è¿½å¾“ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     private Transform player3Controller;
 
     /// <summary>
-    /// Player4‚ª‚Â‚Ü‚½‚Í’Ç]‚·‚éƒIƒuƒWƒFƒNƒg
+    /// Player4ãŒæŒã¤ã¾ãŸã¯è¿½å¾“ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     private Transform player4Controller;
 
     /// <summary>
-    /// Player1‚ÌˆÊ’u‚ğ¦‚·CanvasƒIƒuƒWƒFƒNƒg
+    /// Player1ã®ä½ç½®ã‚’ç¤ºã™Canvasã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     private RectTransform player1;
 
     /// <summary>
-    /// Player2‚ÌˆÊ’u‚ğ¦‚·CanvasƒIƒuƒWƒFƒNƒg
+    /// Player2ã®ä½ç½®ã‚’ç¤ºã™Canvasã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     private RectTransform player2;
 
     /// <summary>
-    /// Player3‚ÌˆÊ’u‚ğ¦‚·CanvasƒIƒuƒWƒFƒNƒg
+    /// Player3ã®ä½ç½®ã‚’ç¤ºã™Canvasã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     private RectTransform player3;
 
     /// <summary>
-    /// Player4‚ÌˆÊ’u‚ğ¦‚·CanvasƒIƒuƒWƒFƒNƒg
+    /// Player4ã®ä½ç½®ã‚’ç¤ºã™Canvasã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     [SerializeField]
     private RectTransform player4;

@@ -6,99 +6,99 @@ using VRC.Udon;
 using UnityEngine.UI;
 
 /// <summary>
-/// ƒIƒuƒWƒFƒNƒg‚Ì“®‚«‚ğ‹L˜^‚¨‚æ‚ÑÄ¶‚·‚é
+/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‹•ãã‚’è¨˜éŒ²ãŠã‚ˆã³å†ç”Ÿã™ã‚‹ 
 /// 
-/// ’ˆÓ–€
-/// * target‚ÌƒIƒuƒWƒFƒNƒg‚É‚ÍSynchronizePosition‚Éƒ`ƒFƒbƒN‚ª‚Â‚¢‚½UdonBehaivour‚ğ‚Â‚¯‚Ä‚¨‚­
-/// * –{ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÍOwner‚ª•p”É‚ÉˆÚ“®‚µ‚È‚¢(Pickup‚µ‚È‚¢‚È‚Ç)ƒIƒuƒWƒFƒNƒg‚É‚Â‚¯‚é
-/// * –{ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‚ÂGameObject‚ÌOwner‚Íí‚ÉƒCƒ“ƒXƒ^ƒ“ƒX‚ÌMaster‚É‚È‚é
-/// * ‹L˜^‚ÆÄ¶‚ÅOwner‚ª•Ï‚í‚é‚Æ‹L˜^‚µ‚½ƒf[ƒ^‚ğÄ¶‚·‚él‚Í‚Á‚Ä‚¢‚È‚¢‚½‚ß”½‰f‚³‚ê‚È‚¢
+/// æ³¨æ„äº‹é …
+/// * targetã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã¯SynchronizePositionã«ãƒã‚§ãƒƒã‚¯ãŒã¤ã„ãŸUdonBehaivourã‚’ã¤ã‘ã¦ãŠã
+/// * æœ¬ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã¯OwnerãŒé »ç¹ã«ç§»å‹•ã—ãªã„(Pickupã—ãªã„ãªã©)ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã¤ã‘ã‚‹
+/// * æœ¬ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æŒã¤GameObjectã®Ownerã¯å¸¸ã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®Masterã«ãªã‚‹
+/// * è¨˜éŒ²æ™‚ã¨å†ç”Ÿæ™‚ã§OwnerãŒå¤‰ã‚ã‚‹ã¨è¨˜éŒ²ã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’å†ç”Ÿã™ã‚‹äººã¯æŒã£ã¦ã„ãªã„ãŸã‚åæ˜ ã•ã‚Œãªã„
 /// </summary>
 public class Recorder : UdonSharpBehaviour
 {
     /// <summary>
-    /// Å‘å˜^‰æŠÔi•bj
+    /// æœ€å¤§éŒ²ç”»æ™‚é–“ï¼ˆç§’ï¼‰
     /// </summary>
     private const int RECORDSECOND = 60;
 
     private const int FRAMERATE = 90;
 
     /// <summary>
-    /// “®‚«ƒf[ƒ^‚ğ“ü‚ê‚Ä‚¨‚­”z—ñ
+    /// å‹•ããƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã¦ãŠãé…åˆ—
     /// </summary>
     private Vector3[] positionData = new Vector3[FRAMERATE * RECORDSECOND];
     private Quaternion[] rotationData = new Quaternion[FRAMERATE * RECORDSECOND];
 
     /// <summary>
-    /// “®‚«ƒf[ƒ^‚Ì‹L˜^‚Ü‚½‚ÍÄ¶‚µ‚Ä‚¢‚éˆÊ’u
+    /// å‹•ããƒ‡ãƒ¼ã‚¿ã®è¨˜éŒ²ã¾ãŸã¯å†ç”Ÿã—ã¦ã„ã‚‹ä½ç½®
     /// </summary>
     private int dataIndex = 0;
 
     /// <summary>
-    /// “®‚«ƒf[ƒ^‚ğ‹L˜^‚¨‚æ‚ÑÄ¶‚ğ‚·‚éGameObject
+    /// å‹•ããƒ‡ãƒ¼ã‚¿ã‚’è¨˜éŒ²ãŠã‚ˆã³å†ç”Ÿã‚’ã™ã‚‹GameObject
     /// </summary>
     [SerializeField]
     private GameObject target;
 
-    // TODO: Œ»ó‘Ô‚İ‚½‚¢‚ÈEnum‚ğ‚Â‚­‚Á‚ÄisRecording‚ÆisRewinding‚ğ‚Ü‚Æ‚ß‚é
-    // ˆê•û‚ªtrue‚È‚ç‚»‚Ìó‘Ô, ‚Ç‚¿‚ç‚àfalse‚È‚ç‘Ò‚¿ó‘Ô
+    // TODO: ç¾çŠ¶æ…‹ã¿ãŸã„ãªEnumã‚’ã¤ãã£ã¦isRecordingã¨isRewindingã‚’ã¾ã¨ã‚ã‚‹
+    // ä¸€æ–¹ãŒtrueãªã‚‰ãã®çŠ¶æ…‹, ã©ã¡ã‚‰ã‚‚falseãªã‚‰å¾…ã¡çŠ¶æ…‹
 
     /// <summary>
-    /// ‹L˜^ó‘Ô‚Å‚ ‚é‚©
+    /// è¨˜éŒ²çŠ¶æ…‹ã§ã‚ã‚‹ã‹
     /// </summary>
     private bool isRecording = false;
 
     /// <summary>
-    /// Ä¶ó‘Ô‚Å‚ ‚é‚©
+    /// å†ç”ŸçŠ¶æ…‹ã§ã‚ã‚‹ã‹
     /// </summary>
     private bool isRewinding = false;
 
     /// <summary>
-    /// Œ»ó‘Ô‚Ì•\¦—pƒeƒLƒXƒg
+    /// ç¾çŠ¶æ…‹ã®è¡¨ç¤ºç”¨ãƒ†ã‚­ã‚¹ãƒˆ
     /// </summary>
     [UdonSynced]
     public string state;
 
     /// <summary>
-    /// Œ»ó‘Ô‚ğ•\¦‚·‚éUIText
+    /// ç¾çŠ¶æ…‹ã‚’è¡¨ç¤ºã™ã‚‹UIText
     /// </summary>
     [SerializeField]
     private Text stateText;
 
     private void Update()
     {
-        // Master“à‚¾‚¯‚Åˆ—‚ğ‚·‚é
+        // Masterå†…ã ã‘ã§å‡¦ç†ã‚’ã™ã‚‹
         if (!Networking.LocalPlayer.IsOwner(this.gameObject))
             return;
 
-        // ‹L˜^’†‚Å‚ ‚ê‚Î
+        // è¨˜éŒ²ä¸­ã§ã‚ã‚Œã°
         if (isRecording)
         {
             state = "Recording";
-            // ‹L˜^ãŒÀ‚ğ’´‚¦‚Ä‚¢‚ê‚Î‹L˜^‚µ‚È‚¢
+            // è¨˜éŒ²ä¸Šé™ã‚’è¶…ãˆã¦ã„ã‚Œã°è¨˜éŒ²ã—ãªã„
             if (dataIndex >= 90 * RECORDSECOND)
             {
                 state = "Finish Recording";
                 return;
             }
 
-            // Œ»ó‘Ô‚ğ‹L˜^‚·‚é
+            // ç¾çŠ¶æ…‹ã‚’è¨˜éŒ²ã™ã‚‹
             positionData[dataIndex] = target.transform.position;
             rotationData[dataIndex] = target.transform.rotation;
             dataIndex++;
         }
-        // Ä¶ó‘Ô‚Å‚ ‚ê‚Î
+        // å†ç”ŸçŠ¶æ…‹ã§ã‚ã‚Œã°
         else if (isRewinding)
         {
             state = "Rewinding";
-            // Ä¶‚Å‚«‚éƒf[ƒ^‚ª‚È‚¯‚ê‚Î‘Ò‚¿ó‘Ô‚É‚·‚é
+            // å†ç”Ÿã§ãã‚‹ãƒ‡ãƒ¼ã‚¿ãŒãªã‘ã‚Œã°å¾…ã¡çŠ¶æ…‹ã«ã™ã‚‹
             if (dataIndex <= 0)
             {
                 state = "Waiting";
                 return;
             }
 
-            // ‹L˜^‚³‚ê‚½ó‘Ô‚ğ”½‰f‚·‚é
+            // è¨˜éŒ²ã•ã‚ŒãŸçŠ¶æ…‹ã‚’åæ˜ ã™ã‚‹
             target.transform.position = positionData[dataIndex - 1];
             target.transform.rotation = rotationData[dataIndex - 1];
             dataIndex--;
@@ -111,21 +111,21 @@ public class Recorder : UdonSharpBehaviour
 
     private void LateUpdate()
     {
-        // ó‘Ô•\¦ƒeƒLƒXƒg‚ğXV‚·‚é
+        // çŠ¶æ…‹è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°ã™ã‚‹
         stateText.text = state;
     }
 
     /// <summary>
-    /// Ä¶‚·‚é(uGUI‚ÌButton‚©‚çÀs‚·‚é)
+    /// å†ç”Ÿã™ã‚‹(uGUIã®Buttonã‹ã‚‰å®Ÿè¡Œã™ã‚‹)
     /// </summary>
     public void Rewind()
     {
-        // ’N‚ªƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚àÄ¶‚Å‚«‚é‚æ‚¤‚É
+        // èª°ãŒãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ã‚‚å†ç”Ÿã§ãã‚‹ã‚ˆã†ã«
         this.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, "StartRewindingInOwner");
     }
 
     /// <summary>
-    /// ‹L˜^‚ğŠJn‚·‚é(uGUI‚ÌButton‚©‚çÀs‚·‚é)
+    /// è¨˜éŒ²ã‚’é–‹å§‹ã™ã‚‹(uGUIã®Buttonã‹ã‚‰å®Ÿè¡Œã™ã‚‹)
     /// </summary>
     public void StartRecordingInOwner()
     {
@@ -135,7 +135,7 @@ public class Recorder : UdonSharpBehaviour
     }
 
     /// <summary>
-    /// ‹L˜^‚ğ’â~‚·‚é(uGUI‚ÌButton‚©‚çÀs‚·‚é)
+    /// è¨˜éŒ²ã‚’åœæ­¢ã™ã‚‹(uGUIã®Buttonã‹ã‚‰å®Ÿè¡Œã™ã‚‹)
     /// </summary>
     public void StopRecordingInOwner()
     {
@@ -143,18 +143,18 @@ public class Recorder : UdonSharpBehaviour
     }
 
     /// <summary>
-    /// Ä¶‚·‚é(uGUI‚ÌButton‚©‚çÀs‚·‚é)
+    /// å†ç”Ÿã™ã‚‹(uGUIã®Buttonã‹ã‚‰å®Ÿè¡Œã™ã‚‹)
     /// </summary>
     public void StartRewindingInOwner()
     {
-        // TODO: ‚½‚Ô‚ñ‚±‚ÌSetOwner‚Í•s—v
+        // TODO: ãŸã¶ã‚“ã“ã®SetOwnerã¯ä¸è¦
         Networking.SetOwner(Networking.LocalPlayer, target);
         isRecording = false;
         isRewinding = true;
     }
 
     /// <summary>
-    /// ‚·‚×‚Ä‚Ìƒf[ƒ^‚ğíœ‚·‚é
+    /// ã™ã¹ã¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã™ã‚‹
     /// </summary>
     public void RemoveData()
     {
