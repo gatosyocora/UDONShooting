@@ -1,5 +1,6 @@
 # UDONShooting
-UdonSharp scripts for my UDON test world
+UdonSharp scripts for my UDON test world  
+自作UDONテストワールドで使用したUdonSharpスクリプト
 
 * JetController & ChargeRing & BoostRing  
 https://twitter.com/gatosyocora_vrc/status/1246788752220946433  
@@ -15,7 +16,7 @@ https://twitter.com/gatosyocora_vrc/status/1247809982625533953
 * MiniMap
 * PlayerMods
 
-## Environment
+## Environment/環境
 * Unity 2018.4.20f1
 * UdonSharp v0.14.1
 * VRCSDK 2020.04.01.09.57
