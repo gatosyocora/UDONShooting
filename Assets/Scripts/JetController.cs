@@ -10,7 +10,7 @@ using UnityEngine.UI;
 /// 
 /// Sceneに必要なもの
 /// * 子にカメラが入ったPickup可能なオブジェクト = コントローラオブジェクト(これに本スクリプトをアタッチ)
-/// * カメラとコントローラ両方にynchronizePositionにチェックがついたUdonBehaivourをつける
+/// * カメラとコントローラ両方にSynchronizePositionにチェックがついたUdonBehaivourをつける
 /// 
 /// 仕様
 /// * トリガー押下でコントローラオブジェクトのz方向に空を飛ぶ

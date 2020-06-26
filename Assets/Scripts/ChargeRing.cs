@@ -8,6 +8,7 @@ using VRC.Udon;
 /// JetControllerにエネルギーをチャージするリングを作成する 
 /// 
 /// Sceneに必要なもの
+/// * IsTriggerのColliderがついたGameObject(本スクリプトをアタッチする)
 /// * JetController.csがアタッチされたコントローラオブジェクト4つ
 /// * リングに当たったときに発生するエフェクト用ParticleSystem
 /// * リングが使用可能であることを示すエフェクト用ParticleSystem
