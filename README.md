@@ -12,7 +12,7 @@ https://twitter.com/gatosyocora_vrc/status/1247503810781569024
 https://twitter.com/gatosyocora_vrc/status/1247501093807915008
 
 * CheatDice & Recorder  
-必ず6が出るサイコロとそれを巻き戻す機能を提供
+必ず6が出るサイコロとそれを巻き戻す機能を提供  
 https://twitter.com/gatosyocora_vrc/status/1247405657323491328  
 https://twitter.com/gatosyocora_vrc/status/1247809982625533953
 
